@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		* {
+			text-align: center;
+			margin: 0 auto;
+		}
+
+		.pagination {
+			display: inline-block;
+		}
+
+		.pagination a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+		}
+
+		.pagination a.active {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		.pagination a:hover:not(.active) {
+			background-color: #ddd;
+		}
+	</style>
+</head>
+
+<body>
+	<br>
+	<!-- 시도 -->
+	시도선택: <select class="sidoList">
+		<option value="all">-</option>
+	</select>
+	<br><br>
+	<hr>
+	<br>
+	<table border="1" style="border-collapse: collapse;">
+		<thead>
+			<tr>
+				<th>센터ID</th>
+				<th>센터명</th>
+				<th>전화번호</th>
+				<th>주소</th>
+			</tr>
+		</thead>
+		<tbody id="list">
+
+		</tbody>
+	</table>
+	<br>
+	<div class="center">
+		<div class="pagination"></div>
+	</div>
+	<script>
+		let url = `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&serviceKey=7%2BNDOxNDRjFjfId6CMrT7kJaG5MbjadtfLG8NprC7%2Bh8ZAtH1D2IrerObZa4P9Ug6dn5ebWJCgX61bhZ9UGUqg%3D%3D`;
+
+		// 전체 센터의 목록.
+		let centerList = [];
+
+		// 전체건수
+		fetch(url)
+			.then(resolve => resolve.json()) 	// resolve라는 변수 / 문자열 -> 객체로 받음
+			.then(json => {
+				console.log(json);
+				console.log(`전체건수: ${json.totalCount}`);
+				let sidos = [];
+				centerList = json.data; // 서버에서 가져온 데이터 저장
+
+				for (let i = 0; i < centerList.length; i++) {
+					if (sidos.indexOf(centerList[i].sido) == -1) {	// 해당 시도가 있지 않으면
+						sidos.push(centerList[i].sido);
+					}
+				}
+				console.log(sidos);
+
+				sidos.forEach(prop => {
+					let option = document.createElement('option');
+					option.innerText = prop;
+					option.setAttribute('value', prop);
+					document.querySelector('.sidoList').appendChild(option);
+				})
+
+
+				// 첫번째는 배열의 값을 들고오고, 두번째는 인덱스 값을 가져온다.
+				//json.data.forEach((center, idx) => {	// 배열에 있는 건수 만큼 반복하면서 이 함수를 실행하겠다.
+				//	if(idx < 10) {
+				//	let tr = makeTr(center);
+				//	document.querySelector('#list').appendChild(tr);
+				//	}
+				//});
+
+				showPageList(1, centerList);
+			})
+
+		// 시도 체인지 이벤트.
+		document.querySelector('select.sidoList').addEventListener('change', function (e) {
+			console.log(this.value);
+			let select = [];
+			// centerList 배열에 sido라는 속성이 잇음
+			//console.log(centerList[1].sido);
+			document.querySelector('#list').innerHTML = '';
+			document.querySelector('.pagination').innerHTML = '';
+
+			if (this.value == 'all') {
+				showPageList(1, centerList);
+			} else {
+				for (let i = 0; i < centerList.length; i++) {
+					if (centerList[i].sido == this.value) {
+						//let tr = makeTr(centerList[i]);
+						//document.querySelector('#list').appendChild(tr);
+						select.push(centerList[i]);
+					}
+				}
+				showPageList(1, select);
+			}
+
+		})
+
+		// 센터정보를 이용해서 tr생성
+		function makeTr(center) {
+			let tr = document.createElement('tr');
+			['id', 'centerName', 'phoneNumber', 'address'].forEach(prop => {
+				let td = document.createElement('td');
+				if (prop == 'centerName') {	// centerName에 링크 생성
+					let atag = document.createElement('a');
+					atag.innerText = center[prop];
+					atag.setAttribute('href', 'apiMap.jsp?lat=' + center.lat + '&lng=' + center.lng);	// href 속성을 가진다 - 링크주소
+					atag.setAttribute('target', '_blank');	// 새창에서 열기 속성
+					td.appendChild(atag);
+				} else {
+					td.innerText = center[prop];
+				}
+				tr.appendChild(td);
+			})
+			// 삭제.
+			let td = document.createElement('td');
+			let bnt = document.createElement('button');
+			bnt.innerText = '삭제';
+			td.appendChild(bnt);
+			tr.appendChild(td);
+			
+			bnt.addEventListener('click', function (e) {
+				e.target.parentElement.parentElement.remove();
+				console.log(e.target.parentElement.parentElement);
+			})
+			return tr;
+		}
+
+
+
+		// page 정보를 매개값으로 가지는 페이지, 목록 보여주는 함수
+		function showPageList(page = 1, targetList = []) {
+
+			let totalCount = targetList.length; // 전체건수
+			// 페이지의 목록을 보여주기.
+			document.querySelector('#list').innerHTML = ''; 	// 비워주기
+
+			let start = (page - 1) * 10; // 0
+			let end = page * 10; // 10
+			end = end > totalCount ? totalCount : end;
+
+			for (let i = start; i < end; i++) {
+				let tr = makeTr(targetList[i]);
+				document.querySelector('#list').appendChild(tr);
+			}
+
+			// 페이지의 링크 생성.
+			document.querySelector('.pagination').innerHTML = '';
+			let endPage = Math.ceil(totalCount / 10); // ceil올림 , 35/10 -> 4
+			endPage = Math.ceil(page / 10) * 10;
+			let realEndPage = Math.ceil(totalCount / 10);
+			let startPage = endPage - 9;
+			endPage = endPage > realEndPage ? realEndPage : endPage;
+			let next = endPage < Math.ceil(totalCount / 10); // 29page
+			let prev = startPage > 1;
+
+			// <<
+			if (prev) {
+				let atag = document.createElement('a');
+				atag.addEventListener('click', function (e) {
+					e.preventDefault();		// 기본 이벤트를 차단하겠다.
+					showPageList(startPage - 1, targetList);
+				})
+				atag.setAttribute('href', startPage - 1);
+				atag.innerHTML = '&laquo;';
+				document.querySelector('.pagination').appendChild(atag);
+			}
+
+			// 1 2 3 4 5 6 7 8 9 10
+			for (let i = startPage; i <= endPage; i++) {
+				let atag = document.createElement('a');
+				atag.addEventListener('click', function (e) {
+					e.preventDefault();		// 기본 이벤트를 차단하겠다.
+					showPageList(i, targetList);
+				})
+				if (page == i) { // i가 현재 페이지임
+					atag.setAttribute('class', 'active');
+				}
+				atag.setAttribute('href', i);
+				atag.innerHTML = i;
+				document.querySelector('.pagination').appendChild(atag);
+			}
+
+			// >>
+			if (next) {
+				let atag = document.createElement('a');
+				atag.addEventListener('click', function (e) {
+					e.preventDefault();		// 기본 이벤트를 차단하겠다.
+					showPageList(endPage + 1, targetList);
+				})
+				atag.setAttribute('href', endPage + 1);
+				atag.innerHTML = '&raquo;';
+				document.querySelector('.pagination').appendChild(atag);
+			}
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ajax.html</title>
+	<script>
+		let json = `[{"name":"홍길동", "age":20}, {"name":"김길동", "age":25}]`;
+		// json 포멧의 문자 => 자바스크립트의 객체. JSON.parse()
+		// 자바스크립트의 객체 => json 포멧의 문자. JSON.stringify()
+
+		// JSON.parse(json) - 자바스크립트의 객체로 만들어줌
+		let obj = JSON.parse(json);
+		console.log(obj);
+
+		// json 포멧의 문자열로 만들어줌
+		let str = JSON.stringify(obj);
+		console.log(str);
+	</script>
+</head>
+
+<body>
+	<h3>Asynchronous Javascript and Xml</h3>
+	<h5>비동기 방식의 js, xml - ajax</h5>
+	<ul id="list"></ul>
+
+	<script>
+		// 서버에서 데이터 가지고 있겠습니다. - Ajax
+		// Ajax 처리 객체 : XMLHttpRequest
+		let ajx = new XMLHttpRequest();
+
+		// eXtensible Markup Language
+		//ajx.open('get', './dataset.xml'); //  index.html 페이지를 가져오겠다
+		//ajx.open('get', './MOCK_DATA.json');
+		ajx.open('get', '../AjaxReplyList.do?nid=1');
+
+		//get방식, 
+		ajx.send();
+
+		// callback함수, onload이벤트가 발생하면 함수를 실행하겠다.
+		ajx.onload = getJson;
+		//		ajx.onload = function(e){	
+		//console.log(ids[0].innerHTML);
+		//document.querySelector('body').innerHTML = ajx.responseText;	
+		//		}
+
+		function getReply(){
+			console.log(ajx.responseText);
+		}
+		
+		
+		//------------------------------------------------------------
+
+		// function genXML() {
+		// 	console.log(ajx.responseXML);
+		// 	let xml = ajx.responseXML;
+		// 	let records = xml.getElementsByTagName('record'); // record안에는 id, name .. 있으니
+
+		// 	for (let i = 0; i < records.length; i++) {
+		// 		let li = document.createElement('li');
+		// 		li.innerText = records[i].children[1].innerHTML + "," + records[i].children[2].innerHTML;	// children으로 들고오면 id태그, name태그 등등 [0], [1]이렇게 들고옴
+		// 		document.getElementById('list').appendChild(li);
+		// 	}
+		// }
+
+		//------------------------------------------------------------
+
+		function getJson() {
+			console.log(ajx);
+			let data = JSON.parse(ajx.responseText);
+			console.log(data);
+
+			// 값을 불러온다는것 확인 (js는 .id이렇게)
+			let peoples = data[0].id;
+			console.log(peoples);
+
+			for (let i = 0; i < data.length; i++) {
+				let li = document.createElement('li');
+				li.innerText = data[i].replyer + " , " + data[i].reply;
+				document.getElementById('list').appendChild(li);
+			}
+		}
+	</script>
+</body>
+
+
+</html>

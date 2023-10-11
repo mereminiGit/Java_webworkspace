@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ajaxJquery.html</title>
+	<!--<script src="../js/jquery-3.7.1.min.js"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function (e){
+			// DOM content가 다 로딩된 이후에 이 함수를 실행
+		})
+
+		$(document).ready(function() {
+			// document 객체의 사용준비가 되면 함수를 실행
+
+			let ul = $('<ul />'); // - jQuery객체 	// = document.createElement('ul') - DOM객체
+			console.log(ul);	// 배열로 가져온다. -> 이렇게 나와야 jQuery에서 제공하는 함수 사용가능
+			ul.append($('<li />').text('사과')).attr('id', 'first');	// li 이너텍스트 사과, id 속성은 first로
+			ul.append($('<li id="second">바나나</li>'));
+	
+			// js는 위에서 아래로 코드를 읽는다.
+			$('div#show').append(ul);	// $('body') 여기를 실행하는 시점에는 body를 읽기 전 -> 화면에 표시 안 됨
+										// 1. 화면을 다 읽은 후 실행하라고 이벤트를 걸기
+	
+			let dom = document.createElement('ul');
+			console.log(dom);
+
+		})
+
+	</script>
+</head>
+
+<body>
+	<div id="show"></div>
+	<!-- 바디에는 HTML만 보통 넣고, script는 head에 넣는다 -->
+	<script>
+		// $('body').append(ul);	// 2. body 태크를 파악한 후에 사용가능.
+	</script>
+</body>
+
+</html>

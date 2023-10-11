@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>jqueryMember2.html</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id="addMember">
+		<label for="">ID </label><input type="text" name="id"><br>
+		<label for="">NAME </label><input type="text" name="name"><br>
+		<label for="">SCORE </label><input type="text" name="score"><br>
+		<button id="addBtn">추가</button>
+	</div>
+	<br><br>
+	<div id="memberList">
+		<table border="2">
+			<thead>
+				<tr>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>점수</th>
+					<th><input type="checkbox" /></th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 데이터 들어가는 형태 -->
+				<tr>
+					<td>user1</td>
+					<td>홍길동</td>
+					<td>88</td>
+					<td><input type="checkbox" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script>
+		const members = [
+			{id: "user1", name: "Hong", score: 88},
+			{id: "user2", name: "Park", score: 70},
+			{id: "user3", name: "Kim", score: 65},
+		]
+
+		members.forEach(member => {
+			let tr = $('tbody').append('<tr />');
+			console.log(member);
+			for (let tmp in member) {
+				//	tr.append('<td />').text($('member[tmp]'));
+				console.log(member[tmp]);
+				tr.append($('<td />').text(`${member[tmp]}`));
+			}
+			tr.append($('<td />').append($('<input />').attr('type', 'checkbox')));
+		})
+
+
+		// input 태그의 value 값을 들고오는 함수 - val()
+		//$('').val();
+
+		// 등록 이벤트.
+		$('#addBtn').on('click', function (e) {
+			// 입력된 값 변수에 저장.
+			let id = $('input[name=id]').val();
+			//console.log(id);
+			let name = $('input[name=name]').val();
+			let score = $('input[name=score]').val();
+
+			let addMumber = {id: id, name: name, score: score};
+
+			// tr, td 생성해서 값 넣기
+			let tr = $('tbody').append('<tr />');
+			for (let tmp in addMumber) {
+				tr.append($('<td />').text(`${addMumber[tmp]}`));
+			}
+			tr.append($('<td />').append($('<input />').attr('type', 'checkbox')));
+
+			// input value 초기와.
+			$('input[name=id]').val('');
+			$('input[name=name]').val('');
+			$('input[name=score]').val('');
+		})
+
+		// checkbox 이벤트
+		$('thead>tr>th>input').on('change', function (e) {
+			//let checkbox = $('tbody>tr>td>input');
+			//console.log(checkbox);
+
+			//($('tbody input:checkbox').prop('checked', e.target.checked));
+			
+			console.log($('thead input:checkbox').prop('checked'));
+			// prop는 true, false 값을 준다
+			if ($('thead input:checkbox').prop("checked")) {
+				//console.log($('tbody>tr>td>input:checkbox'));
+				($('tbody input:checkbox').attr('checked', true));
+			} else {	//if ($('thead input:checkbox').prop('checked', false))
+				($('tbody input:checkbox').attr('checked', false));
+			}
+		})
+
+		// td 요소 체크박스 해제시 th 체크박스 해제
+		$('tbody input[type="checkbox"]').on('change', function (e) {
+			//console.log($('tbody input[type="checkbox"]').length);
+			//console.log($('tbody input[type="checkbox"]:checked').length);
+			if ($('tbody input[type="checkbox"]').length == $('tbody input[type="checkbox"]:checked').length) {
+				$('thead input:checkbox').prop('checked', true);
+			} else {
+				$('thead input:checkbox').prop('checked', false);
+			}
+		})
+	</script>
+</body>
+
+</html>

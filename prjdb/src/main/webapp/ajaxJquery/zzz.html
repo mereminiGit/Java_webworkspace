@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		.outer {
+			width: 480px;
+			height: 350px;
+			background-color: blanchedalmond;
+		}
+
+		.outer span {
+			display: inline-block;
+			width: 100px;
+			padding: 2px;
+			margin: 2px;
+			border: 1px solid black;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<input type="text" class="userVal">
+	<button id="addBtn">입력</button>
+	<div class="outer">
+		<!-- span은 인라인 한줄에 쭉 나오기 때문에 inline-block하면 영역이 생김-->
+
+	</div>
+	<div id="timer">남은시간: <span></span></div>
+	<script>
+		let str = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut at quia unde animi, in sit iure libero a iusto eadolorum minima, odit rerum veniam tempore ex. Dolores, facilis laudantium?';
+		// 공백을 기준으로 나눠주는 명령어
+		let wordAry = str.split(' ');
+		console.log(wordAry);
+
+
+		wordAry.forEach(prop => {
+			let span = document.createElement('span');
+			span.innerText = prop;
+			document.querySelector('.outer').appendChild(span);
+		})
+
+		document.querySelector('.userVal').addEventListener('change', function (e) {
+			console.log(this.value);
+			console.log(document.querySelector('.outer'));
+
+			document.querySelectorAll('.outer span').forEach(prop => {
+				if (prop.innerText == this.value) {
+					prop.remove();
+				}
+			})
+			document.querySelector('.userVal').value = null;
+		})
+
+        // 시간
+		
+		
+	</script>
+</body>
+
+</html>

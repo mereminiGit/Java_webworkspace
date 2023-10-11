@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>jqueryCss.html</title>
+	<style>
+		#show>ul>li:first-child{
+			color: red;
+		}
+		li:nth-child(2){
+			color: yellow;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	<script>
+
+	</script>
+</head>
+
+<body>
+	<div id="show">
+		<ul>
+			<li>Apple</li>
+			<li>Banana</li>
+			<li>Cherry <span>추천</span></li>
+			<li></li>
+		</ul>
+	</div>
+	<input type="checkbox" name="hobby" value="reading" checked>
+	<input type="checkbox" name="hobby" value="eating">
+	<script>
+		// css의 선택자
+		$('#show>ul>li:nth-child(1)').css('background', 'yellow');
+		$('#show>ul>li:nth-child(2)').css('background', 'navy');
+		$('li').on('click', function(e){	// on 이벤트 실행
+			console.log(this);	// 이벤트를 받을 때 this는 이벤트 받는 대상을 가져옴
+			// this.css('color', 'white');	 // js 객체라서 오류남
+			$(this).css('color', 'white');	 // jQuery 객체로 만들어주기
+		})
+		
+		// jQuery 선택자 / eq, lt, gt 순번은 index의 값이 0부터.
+		$('li:eq(0)').css('border', '2px solid green');0
+		$('li:gt(0)').css('fontSize', '2em');
+		$('li:contains(Banana)').css('fontSize', '25px');
+		$('li:has(span)').css('background', 'lightgreen');
+		$('li:not(:eq(0))').css('border', '3px dotted white');
+		$('li:empty').text('No').css('fontSize', '16px');
+		
+		// input 요소의 선택
+		console.log($('input:checked'));
+		
+		// 기존 요소의 내부에 추가
+		$('ul').append($('<li />').text('Melon'));	// <li>Melon</li>
+		$('<li />').html('<b>Peach</b>').appendTo($('ul'));  //
+
+		// 기존 요소의 외부에 추가
+		// $('li:last').after($('<li>Grape</li>'));  // li:last의 뒤에 넣겟습니다.
+		$('li:contains(Banana)').after($('<li>Grape</li>'));  
+		$('<li>Grape2</li>').insertAfter($('li:first'));
+		
+		// .wrap() 메소드
+		$('div#show').wrap('<div class="row"/>'); 
+		  // div의 show라는 id값을 가진것을 div row class로 감싸겟슴다
+		  
+		// 요소의 복사 및 삭제
+		let clone = $('li:first').clone();
+		console.log(clone);
+		$('ul').append(clone);
+	</script>
+</body>
+
+</html>

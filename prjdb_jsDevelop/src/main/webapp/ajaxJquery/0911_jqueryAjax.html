@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id="show"></div>
+	
+	<div class="reply">
+		<label>작성자</label><input type="text" name="replyer">
+		<label>댓글</label><input type="text" name="reply">
+		<button id="addBtn">전송</button>
+	</div>
+	<script>
+		$.ajax({
+			url: 'dataset.xml',
+			method: 'get', 	// 요청방식 default: get / get 또는 post
+			success: function (result) {  // result에는 index.html에서 받아온것 / {}안을 실행
+				console.log(result);  // <dataset><record>..</record>..</dataset>
+				let records = $(result).find('record');  // result의 하위에 있는 record를 찾을떄 find
+				console.log(records);
+				for(let i = 0; i < records.length; i++){
+					$('<p />').text(records[i].children[0].innerHTML + ' , ' + records[i].children[1].innerHTML)
+					          .appendTo($('#show'));
+				}
+				//$('#show').html(result);  // html페이지가 그려짐 (index.hmtl)
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+		
+		
+		// add이벤트
+		$('#addBtn').on('click', function (e) {
+			$.ajax({
+				url: '../AjaxReplyAdd.do',
+				method: 'post',
+				data: {nid: 2, writer: $('input[name=replyer]').val(), content: $('input[name=reply]').val()},
+				success: function (e) {
+					console.log(e);
+				},
+				error: function (e) {
+					console.log(e);
+				}
+			})
+		})
+	</script>
+</body>
+
+</html>
