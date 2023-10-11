@@ -6719,3 +6719,9 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY net.harawata.mybatipse 2 0 2023-10-11 23:37:38.766
 !MESSAGE The method 'noticeSelectList' declared in 'co.yedam.prjdb.notice.map.NoticeMapper' is overloaded. MyBatis does not support overloading method.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2023-10-11 23:38:51.564
+!MESSAGE No repository found at http://download.eclipse.org/technology/m2e/releases/.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2023-10-11 23:39:34.055
+!MESSAGE No repository found at http://dl.bintray.com/testng-team/testng-p2-release/.
