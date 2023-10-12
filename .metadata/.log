@@ -6725,3 +6725,27 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2023-10-11 23:39:34.055
 !MESSAGE No repository found at http://dl.bintray.com/testng-team/testng-p2-release/.
+
+!ENTRY org.eclipse.jst.jsp.core 4 4 2023-10-12 21:14:05.095
+!MESSAGE A workspace crash was detected. The previous session did not exit normally. Not using saved taglib indexes.
+
+!ENTRY org.eclipse.wildwebdeveloper.xml 2 0 2023-10-12 21:14:07.350
+!MESSAGE The given URI https://jakarta.ee/xml/ns/jakartaee/application-client_9.xsd from org.eclipse.jst.standard.schemas could not be resolved for local access
+
+!ENTRY org.eclipse.wildwebdeveloper.xml 2 0 2023-10-12 21:14:07.352
+!MESSAGE The given URI https://jakarta.ee/xml/ns/jakartaee/jobXML_2_0.xsd from org.eclipse.jst.standard.schemas could not be resolved for local access
+
+!ENTRY org.eclipse.wildwebdeveloper.xml 2 0 2023-10-12 21:14:07.355
+!MESSAGE The given URI https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd from org.eclipse.jst.standard.schemas could not be resolved for local access
+
+!ENTRY org.eclipse.wildwebdeveloper.xml 2 0 2023-10-12 21:14:07.356
+!MESSAGE The given URI https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd from org.eclipse.jst.standard.schemas could not be resolved for local access
+
+!ENTRY org.eclipse.wildwebdeveloper.xml 2 0 2023-10-12 21:14:07.381
+!MESSAGE The given URI https://jakarta.ee/xml/ns/validation/validation-configuration-3.0.xsd from org.eclipse.jst.standard.schemas could not be resolved for local access
+
+!ENTRY org.eclipse.wildwebdeveloper.xml 2 0 2023-10-12 21:14:07.392
+!MESSAGE The given URI http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_1.xsd from org.eclipse.jst.standard.schemas could not be resolved for local access
+
+!ENTRY net.harawata.mybatipse 2 0 2023-10-12 21:14:09.234
+!MESSAGE The method 'noticeSelectList' declared in 'co.yedam.prjdb.notice.map.NoticeMapper' is overloaded. MyBatis does not support overloading method.
