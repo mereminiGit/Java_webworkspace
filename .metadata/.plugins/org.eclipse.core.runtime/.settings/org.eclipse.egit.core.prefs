@@ -1,5 +1,6 @@
-GitRepositoriesView.GitDirectories=
-GitRepositoriesView.GitDirectories.relative=
+GitRepositoriesView.GitDirectories=C\:\\Users\\admin\\Documents\\GitHub\\Java_webworkspace\\.git;
+GitRepositoriesView.GitDirectories.relative=.git;
 RepositoryGroups.uuids=
+RepositorySearchDialogSearchPath=C\:\\Users\\admin\\Documents\\GitHub\\Java_webworkspace
 core_ssh_default_agent=\\\\.\\pageant
 eclipse.preferences.version=1

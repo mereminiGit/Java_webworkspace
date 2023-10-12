@@ -1,4 +1,1 @@
-INDEX VERSION 1.4+D:\»ç¿ëÀÚ\Documents\GitHub\webworkspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1542098954.index
-985413812.index
-352780758.index
+INDEX VERSION 1.4+C:\Users\admin\Documents\GitHub\Java_webworkspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
